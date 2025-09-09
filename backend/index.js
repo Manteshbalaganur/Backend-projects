@@ -1,5 +1,7 @@
 const express = require("express");
 
+require("dotenv").config();
+
 const urlRoutes = require("./routes/url");
 
 const connectDB = require("./connect");
@@ -44,6 +46,26 @@ app.get("/:shortId", async (req, res) => {
     res.redirect(entry.redirectUrl);
 });
 
+// Connect MongoDB Atlas
+connectDB(process.env.MONGO_URL)
+  .then(() => {
+    console.log("MongoDB Atlas connected ✅");
+    app.listen(3000, () => console.log("Server running on port 3000"));
+  })
+  .catch((err) => console.error("DB connection error ❌", err));
+  
+// ✅ Local run vs Vercel deploy
+if (process.env.NODE_ENV !== "production") {
+  connectDB("mongodb://localhost:27017/short-url").then(() => {
+    console.log("Database connected");
+    app.listen(3000, () => {
+      console.log("Server running at http://localhost:3000");
+    });
+  });
+} else {
+  // Vercel will call this handler
+  connectDB(process.env.MONGO_URL);
+}
 
 app.listen(PORT,()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
