@@ -4,10 +4,14 @@ const urlRoutes = require("./routes/url");
 
 const connectDB = require("./connect");
 
+const cors = require("cors");
+
 const URL=require("./models/url");
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors()); // frontend and backend communication
 
 connectDB("mongodb://localhost:27017/short-url")
 .then(()=>{
