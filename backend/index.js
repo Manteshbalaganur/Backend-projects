@@ -8,6 +8,10 @@ const connectDB = require("./connect");
 
 const cors = require("cors");
 
+const  staticRouter  = require("./routes/staticrouter.");
+
+const path = require("path"); // for rendering bultin fun
+
 const URL=require("./models/url");
 
 const app = express();
@@ -22,6 +26,18 @@ connectDB("mongodb://localhost:27017/short-url")
 
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false })); // form support
+//server side rendering
+app.set("view engine","ejs");
+
+app.set("views", path.resolve("./views"));
+
+app.get("/test",(req,res)=>{
+  const allurls=URL.find({});
+  return res.render("home");
+});
+
+app.use("/",staticRouter);
 
 app.use("/url",urlRoutes);
 
