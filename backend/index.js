@@ -9,6 +9,7 @@ const connectDB = require("./connect");
 const cors = require("cors");
 
 const  staticRouter  = require("./routes/staticrouter.");
+const  UserRouter  = require("./routes/user");
 
 const path = require("path"); // for rendering bultin fun
 
@@ -38,7 +39,7 @@ app.get("/test",(req,res)=>{
 });
 
 app.use("/",staticRouter);
-
+app.use("/user",UserRouter);
 app.use("/url",urlRoutes);
 
 app.get("/:shortId", async (req, res) => {
