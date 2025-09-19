@@ -33,10 +33,11 @@ app.set("view engine","ejs");
 
 app.set("views", path.resolve("./views"));
 
-app.get("/test",(req,res)=>{
-  const allurls=URL.find({});
-  return res.render("home");
+app.get("/test", async (req, res) => {
+  const allurls = await URL.find({});
+  return res.render("home", { id: null, urls: allurls });
 });
+
 
 app.use("/",staticRouter);
 app.use("/user",UserRouter);
@@ -67,7 +68,7 @@ app.get("/:shortId", async (req, res) => {
 connectDB(process.env.MONGO_URL)
   .then(() => {
     console.log("MongoDB Atlas connected ✅");
-    app.listen(3000, () => console.log("Server running on port 3000"));
+    // app.listen(3000, () => console.log("Server running on port 3000"));
   })
   .catch((err) => console.error("DB connection error ❌", err));
   
@@ -75,9 +76,9 @@ connectDB(process.env.MONGO_URL)
 if (process.env.NODE_ENV !== "production") {
   connectDB("mongodb://localhost:27017/short-url").then(() => {
     console.log("Database connected");
-    app.listen(3000, () => {
-      console.log("Server running at http://localhost:3000");
-    });
+    // app.listen(3000, () => {
+    //   console.log("Server running at http://localhost:3000");
+    // });
   });
 } else {
   // Vercel will call this handler

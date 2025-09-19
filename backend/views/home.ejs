@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>URL Shortener</title>
 </head>
 <body>
-    <h1>welcome to Url shortner </h1>
-    <% if(locals.id){
-        console.log(id); %>
-        <h2>ur shortend url is :  http://localhost:3000/<%=id%>   </h2>
-     } %>
+    <h1>Welcome to URL Shortener</h1>
+
+    <% if (id) { %>
+        <h2>Your shortened URL is: http://localhost:3000/<%= id %></h2>
+    <% } %>
+
     <div>
         <form method="post" action="/url">
-            <label >Enter  Your original URL</label>
-            <input type="text" name="url" placeholder="https.//example.com"/>
-            <button type="submit">generate</button>
+            <label>Enter Your original URL</label>
+            <input type="text" name="url" placeholder="https://example.com" required />
+            <button type="submit">Generate</button>
         </form>
     </div>
 </body>

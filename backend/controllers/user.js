@@ -8,7 +8,9 @@ async function handlerUserSignup(req, res) {
         email, 
         password,
     });
-    return res.render("home");
+    // return res.render("home");
+    return res.render("home", { id: "12345" });
+
 }
 
 module.exports = {handlerUserSignup};
